@@ -90,7 +90,6 @@ const app = new Vue({
           }
         }
       }
-      console.log(total.toString())
       return total.toString().replace(/\B(?=(\d{3})+$)/g, ',')
     }
   },
