@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Vue 示例</title>
+  <style type="text/css">
+    [v-cloak]{
+      display: none;
+    }
+  </style>
 </head>
 <body>
 <div id="app">
@@ -19,6 +24,15 @@
   <div :class="classes"></div>
   <div :class="[activeCls, errorCls]"></div>
   <div :class="classas"></div>
+</div>
+<div id="app4" v-cloak>
+  {{message}}
+</div>
+<div id="app5">
+  <span v-once>{{message}}</span>
+  <div v-once>
+    <span>{{message}}</span>
+  </div>
 </div>
 <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
 <script>
@@ -110,6 +124,18 @@
           }
         ];
       }
+    }
+  });
+  var app4 = new Vue({
+    el: "#app4",
+    data: {
+      message: '这是一段文本'
+    }
+  });
+  var app5 = new Vue({
+    el: '#app5',
+    data: {
+      message: '这是一段文本'
     }
   });
 </script>
