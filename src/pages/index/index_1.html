@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 示例</title>
+</head>
+<body>
+<div id="app">
+  <input type="text" v-model="message" placeholder="请输入....">
+  <p>输入的内容是：{{message}}</p>
+  <textarea v-model="text" placeholder="请输入...."></textarea>
+  <p>输入的内容是：</p>
+  <p style="white-space: pre">{{text}}</p>
+  <input type="text" @input="handleInput" placeholder="请输入....">
+  <p>输入的内容是：{{input_text}}</p>
+  <input type="radio" :checked="picked">
+  <label>单选按钮</label>
+  <br>
+  <input type="radio" v-model="picked" value="html" id="html">
+  <label for="html">HTML</label>
+  <br>
+  <input type="radio" v-model="picked" value="js" id="js">
+  <label for="js">JavaScript</label>
+  <br>
+  <input type="radio" v-model="picked" value="css" id="css">
+  <label for="css">CSS</label>
+  <br>
+  <p>选择的项是：{{picked}}</p>
+  <br>
+  <input type="checkbox" v-model="checked" id="checked">
+  <label for="checked">选择的状态：{{checked}}</label>
+  <br>
+  <input type="checkbox" v-model="checked_1" value="html" id="html_1">
+  <label for="html_1">HTML</label>
+  <br>
+  <input type="checkbox" v-model="checked_1" value="js" id="js_1">
+  <label for="js_1">JavaScript</label>
+  <br>
+  <input type="checkbox" v-model="checked_1" value="css" id="css_1">
+  <label for="css_1">CSS</label>
+  <br>
+  <p>选择的项是：{{checked_1}}</p>
+  <br>
+  <select v-model="selected">
+    <option>html</option>
+    <option value="js">JavaScript</option>
+    <option>css</option>
+  </select>
+  <p>选择的项是：{{selected}}</p>
+  <select v-model="selected_1" multiple>
+    <option>html</option>
+    <option value="js">JavaScript</option>
+    <option>css</option>
+  </select>
+  <p>选择的项是：{{selected_1}}</p>
+  <select v-model="selected_2">
+    <option v-for="option in options" :value="option.value">{{option.text}}</option>
+  </select>
+  <p>选择的项是：{{selected_2}}</p>
+
+</div>
+<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'ddddddddddd',
+      text: '',
+      input_text: '',
+      picked: 'js',
+      checked: false,
+      checked_1: ['html', 'css'],
+      selected: 'html',
+      selected_1: [],
+      options: [
+        {
+          text: 'HTML',
+          value: 'html'
+        },
+        {
+          text: 'JavaScript',
+          value: 'js'
+        },
+        {
+          text: 'CSS',
+          value: 'css'
+        }
+      ],
+      selected_2: []
+    },
+    methods: {
+      handleInput: function (e) {
+        this.input_text = e.target.value;
+      }
+    }
+  });
+</script>
+</body>
+</html>

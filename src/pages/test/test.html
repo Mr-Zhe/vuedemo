@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <my-component message="来自父组件的数据" warning-text="提示信息"></my-component>
+  <input type="text" v-model="parentMessage">
+  <my-component1 :message="parentMessage"></my-component1>
+  <my-component2 message="[1,2,3]"></my-component2>
+  <my-component2 :message="[1,2,3]"></my-component2>
+  <my-component3 :init-count="1"></my-component3>
+  <my-component4 :width="300"></my-component4>
+  <input type="number" v-model="prop_value" @input="setPropValue">
+  <my-component5 :prop-a="prop_value" ></my-component5>
+
+</div>
+<!--<script src="https://unpkg.com/vue/dist/vue.min.js"></script>-->
+<script src= "https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+  Vue.component('my-component5',{
+    props: {
+      propA: Number,
+      propB: [String, Number],
+      propC: {
+        type: Boolean,
+        default: true
+      },
+      propD: {
+        type: Number,
+        required: true
+      },
+      propE: {
+        type: Array,
+        default: function () {
+          return [];
+        }
+      },
+      propF: {
+        validator: function (value) {
+          return value > 10;
+        }
+      }
+    },
+    template: '<div>{{typeof propA}},{{propA}}</div>'
+  });
+  Vue.component('my-component4',{
+    props: ['width'],
+    template: '<div :style="style">组件内容</div>',
+    computed: {
+      style: function () {
+        return {
+          width: this.width + 'px'
+        }
+      }
+    }
+  });
+  Vue.component('my-component3',{
+    props: ['initCount'],
+    template: '<div><div><button @click="++count">点击我</button></div>{{count}}</div>',
+    data: function () {
+      return {
+        count: this.initCount
+      }
+    }
+  });
+  Vue.component('my-component',{
+    props: ['message', 'warningText'],
+    template: '<div>{{message}},fff<div>{{warningText}}</div><a href="#">{{message1}}</a></div>',
+    data: function () {
+      return {
+        message1: '组件内容'
+      }
+    }
+  });
+  Vue.component('my-component2', {
+    props: ['message'],
+    template: '<div>{{message.length}},{{typeof message}}</div>'
+  });
+  Vue.component('my-component1', {
+    props: ['message'],
+    template: '<div>{{message}}</div>'
+  });
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      parentMessage: '',
+      prop_value: 123
+    },
+    methods: {
+      setPropValue: function (e) {
+        console.log(isNaN(e.target.value));
+        if (isNaN(e.target.value)) {
+          this.prop_value = Number(e.target.value);
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>
