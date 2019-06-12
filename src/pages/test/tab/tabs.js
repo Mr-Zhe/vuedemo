@@ -7,6 +7,7 @@ Vue.component('tabs',{
             v-for="(item, index) in navList"\
             @click="handleChange(index)">\
             {{item.label}}\
+          <span v-if="isShown(item)" class="close" @click="deleteTab(index, item.name)"></span>\
         </div>\
       <!-- 标签页标题，这里要用v-for -->\
       </div>\
@@ -59,7 +60,8 @@ Vue.component('tabs',{
       this.getTabs().forEach(function (pane, index) {
         _this.navList.push({
           label: pane.label,
-          name: pane.name || index
+          name: pane.name || index,
+          closable: pane.closable
         });
 
         if (!pane.name){pane.name = index;}
@@ -78,6 +80,21 @@ Vue.component('tabs',{
       tabs.forEach(function (tab) {
         return tab.show = tab.name === _this.currentValue;
       })
+    },
+    deleteTab: function (index, name) {
+      this.navList.splice(index, 1);
+      var tabs = this.getTabs();
+      var that = this;
+      //迭代判断并设置点击的标签页是隐藏状态
+      tabs.forEach(function (tab, index) {
+        if (index === name) {
+          return tab.isShow = false;
+        }
+      });
+    },
+    isShown: function (item) {
+      var falg = item.closable == 'true';
+      return falg;
     }
   },
   watch: {

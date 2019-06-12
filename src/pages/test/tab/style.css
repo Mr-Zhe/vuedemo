@@ -23,9 +23,11 @@
   position: relative;
 }
 .tabs-tab-active{
-  color: #3399ff;
-  border-top: 1px solid #3399ff;
+  color: #336699;
+  border-top: 1px solid #336699;
   border-bottom: 1px solid #fff;
+  transform:translateY(-1px);
+  transition: transform 0.5s;
 }
 .tabs-tab-active:before{
   content: '';
@@ -39,6 +41,17 @@
 }
 .tabs-content{
   padding: 8px 0;
+}
+.close{
+  color: #FF6666;
+}
+.close::before {
+  content: "\2716";
+}
+
+.close:hover {
+  color: #990033;
+  font-weight: bolder;
 }
 
 

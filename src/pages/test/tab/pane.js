@@ -16,6 +16,10 @@ Vue.component('pane',{
     label: {
       type: String,
       default: ''
+    },
+    closable: {
+      type: [Boolean, String],
+      default: true
     }
   },
   methods: {
