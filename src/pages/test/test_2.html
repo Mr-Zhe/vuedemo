@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+  {{message}}
+  <component-a></component-a>
+  <child-component>
+    <p>分发的内容</p>
+    <p>更多分发的内容</p>
+    <h2 slot="header">标题</h2>
+    <div slot="footer">底部信息</div>
+  </child-component>
+</div>
+<script src= "https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+  var bus = new Vue();
+  Vue.component('child-component',{
+    template: '\
+    <div class="container">\
+      <div class="header">\
+        <slot name="header"></slot>\
+      </div>\
+      <div class="main">\
+        <slot></slot>\
+      </div>\
+      <div class="footer">\
+        <slot name="footer"></slot>\
+      </div>\
+      <p>dddddd</p>\
+      <slot>\
+        <p>如果父组件没有插入内容，我将作为默认出现</p>\
+      </slot>\
+      </div>\
+    ',
+    mounted: function () {
+      var header = this.$slots.header;
+      var main = this.$slots.default;
+      var footer = this.$slots.footer;
+      console.log(footer);
+      console.log(footer[0].elm.innerHTML);
+    }
+  });
+  Vue.component('component-a',{
+    template: '<button @click="handleEvent">传递事件</button>',
+    methods: {
+      handleEvent: function () {
+        bus.$emit('on-message', '来自组件component-a的内容');
+      }
+    }
+  });
+
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: ''
+    },
+    mounted: function () {
+      var _this = this;
+      bus.$on('on-message', function (msg) {
+        _this.message = msg;
+      });
+    }
+  });
+</script>
+</body>
+</html>

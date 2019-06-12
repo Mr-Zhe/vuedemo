@@ -10,9 +10,41 @@
   <my-component
     @increase="handleGetTotal"
     @reduce="handleGetTotal"></my-component>
+
+  <p>总数：{{total_1}}</p>
+  <my-component1 v-model="total_1"></my-component1>
+
+  <p>总数：{{total_2}}</p>
+  <my-component2 v-model="total_2"></my-component2>
+  <button @click="handleReduce">-1</button>
 </div>
 <script src= "https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
 <script>
+  Vue.component('my-component2',{
+    props: ['value'],
+    template: '<input :value="value" @input="updateValue">',
+    methods: {
+      updateValue: function (event) {
+        this.$emit('input', event.target.value);
+      }
+    }
+  });
+
+  Vue.component('my-component1',{
+    template: '<button @click="handleClick">+1</button>',
+    data: function () {
+      return {
+        counter: 0
+      }
+    },
+    methods:{
+      handleClick: function () {
+        this.counter++;
+        this.$emit('input', this.counter);
+      }
+    }
+  });
+
   Vue.component('my-component',{
     template: '\
     <div>\
@@ -40,11 +72,16 @@
   var app = new Vue({
     el: '#app',
     data: {
-      total: 0
+      total: 0,
+      total_1: 0,
+      total_2: 0
     },
     methods: {
       handleGetTotal: function (total) {
         this.total = total;
+      },
+      handleReduce: function () {
+        this.total_2--;
       }
     }
   });
