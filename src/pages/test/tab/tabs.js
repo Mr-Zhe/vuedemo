@@ -50,6 +50,7 @@ Vue.component('tabs',{
     },
     getTabs: function () {
       return this.$children.filter(function (item) {
+        console.log(item.$options.name+'..............')
         return item.$options.name === 'pane';
       })
     },
