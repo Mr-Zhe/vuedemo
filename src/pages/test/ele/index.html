@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <ele :list = "list"></ele>
+  <button @click="handleClick">显示列表</button>
+  <ele1></ele1>
+  <ele2>
+    <p>slot的内容</p>
+  </ele2>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+  Vue.component('ele', {
+    render: function (createElement) {
+      if (this.list.length){
+        return createElement('ul', this.list.map(function (item) {
+          return createElement('li', item);
+        }));
+      } else {
+        return createElement('p', '列表为空');
+      }
+    },
+    props: {
+      list: {
+        type: Array,
+        default: function () {
+          return [];
+        }
+      }
+    }
+  });
+  Vue.component('ele1', {
+    render: function (createElement) {
+      var _this = this;
+      return createElement('div', [
+        createElement('input', {
+          domProps: {
+            value: this.value
+          },
+          on: {
+            input: function (event) {
+              _this.value = event.target.value;
+            }
+          }
+        }),
+        createElement('p', 'value: ' + this.value)
+      ]);
+    },
+    data: function () {
+      return{
+        value: ''
+      }
+    }
+  });
+  Vue.component('ele2', {
+    render: function (createElement) {
+      /*if (this.$slots.default === undefined){
+        return createElement('div', '没有使用slot时显示的文本')
+      } else {
+        return createElement('div', this.$slots.default);
+      }*/
+      var _this = this;
+      if(this.list.length){
+        var listNode = createElement('ul', this.list.map(function (item) {
+          return createElement('li', item);
+        }));
+      }else {
+        var listNode = createElement('p', '暂无聊天内容');
+      }
+      return createElement('div', [
+        listNode,
+        createElement('input', {
+          attrs: {
+            placeholder: '输入内容，按回车键发送'
+          },
+          style: {
+            width: '220px'
+          },
+          on: {
+            keyup: function (event) {
+              var code;
+              if (event.key !== undefined) {
+                code = event.key;
+                console.log('event.key = ' + code)
+              } else if (event.keyIdentifier !== undefined) {
+                code = event.keyIdentifier;
+                console.log('event.keyIdentifier = ' + code)
+              } else if (event.keyCode !== undefined) {
+                code = event.keyCode;
+                console.log('event.keyCode = ' + code)
+              }
+              if(code !== 'Enter') return;
+              _this.list.push(event.target.value);
+              event.target.value = '';
+            }
+          }
+        })
+      ]);
+    },
+    data: function () {
+      return {
+        value: '',
+        list: []
+      }
+    }
+  });
+  var app = new Vue({
+    el: '#app',
+    data: {
+      list: []
+    },
+    methods: {
+      handleClick: function () {
+        this.list = [
+          '《Vue.js实战》',
+          '《JavaScript高级程序设计》',
+          '《JavaScript语言精粹》'
+        ];
+      }
+    }
+  });
+</script>
+</body>
+</html>

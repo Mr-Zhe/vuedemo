@@ -10,7 +10,7 @@ Vue.component('questionnaire', {
       <div>\
         <mybutton v-show="page === count - 1" :banned="disabledSubmit" :class="[\'floatClass\',{disabledColor: disabledSubmit}]" @click="handleSubmit">提交</mybutton>\
         <mybutton v-show="page < count - 1" :banned="disabledNext" :class="[\'floatClass\',{disabledColor: disabledNext}]" @click="handleNext">下一题</mybutton>\
-        <mybutton v-show="page > 0" :banned="false" :class="[\'buttonone\',\'floatClass\']" @click="handlePrev">上一题</mybutton>\
+        <mybutton v-show="page > 0" :banned="false" :class="[\'buttonOne\',\'floatClass\']" @click="handlePrev">上一题</mybutton>\
         <mybutton @click="handleReset" :banned="false" :class="[\'floatClass\']">重置</mybutton>\
       </div>\
     </div>\
